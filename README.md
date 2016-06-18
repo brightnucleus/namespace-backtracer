@@ -3,7 +3,7 @@
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/brightnucleus/namespace-backtracer.svg)](https://scrutinizer-ci.com/g/brightnucleus/namespace-backtracer/?branch=master)
 [![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/brightnucleus/namespace-backtracer.svg)](https://scrutinizer-ci.com/g/brightnucleus/namespace-backtracer/?branch=master)
 [![Build Status](https://img.shields.io/scrutinizer/build/g/brightnucleus/namespace-backtracer.svg)](https://scrutinizer-ci.com/g/brightnucleus/namespace-backtracer/build-status/master)
-[![Codacy Badge](https://img.shields.io/codacy/00000000000000000000000000000000.svg)](https://www.codacy.com/app/BrightNucleus/namespace-backtracer)
+[![Codacy Badge](https://img.shields.io/codacy/f6cbee5a1adb4e2995aa5e42d8531fce.svg)](https://www.codacy.com/app/BrightNucleus/namespace-backtracer)
 [![Code Climate](https://img.shields.io/codeclimate/github/brightnucleus/namespace-backtracer.svg)](https://codeclimate.com/github/brightnucleus/namespace-backtracer)
 
 [![Latest Stable Version](https://img.shields.io/packagist/v/brightnucleus/namespace-backtracer.svg)](https://packagist.org/packages/brightnucleus/namespace-backtracer)

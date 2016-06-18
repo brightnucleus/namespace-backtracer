@@ -24,7 +24,7 @@ trait NamespaceBacktracerTrait
 {
 
     /**
-     * Get the caller's namespace from debug_backtrace() info.
+     * Get the caller from debug_backtrace() info.
      *
      * This traverses the call stack until it finds the first function that is
      * not a method of an ignored class/interface.
@@ -35,9 +35,9 @@ trait NamespaceBacktracerTrait
      *
      * @param array|null $debugInfo Optional. Output of `debug_backtrace()` function.
      *
-     * @return string Namespace of the calling object.
+     * @return string Fully qualified name of the calling object/function.
      */
-    protected function getCallingNamespace($debugInfo = null)
+    protected function getCaller($debugInfo = null)
     {
         // Fetch the debugInfo if none was passed in.
         if ($debugInfo === null) {
@@ -51,11 +51,8 @@ trait NamespaceBacktracerTrait
             $found = false;
 
             // Are we dealing with a class method or a function?
-            if (isset($entry['class'])) {
+            if (isset($entry['class']) && ! empty($entry['class'])) {
                 $class = $entry['class'];
-                if (empty($class)) {
-                    return $this->getGlobalNamespace();
-                }
 
                 $ignored = false;
                 foreach ($ignoredInterfaces as $ignoredInterface) {
@@ -79,15 +76,39 @@ trait NamespaceBacktracerTrait
             }
 
             if (false !== $found) {
-                $namespace = $this->extractNamespace($found);
-
-                return '' !== $namespace
-                    ? $namespace
-                    : $this->getGlobalNamespace();
+                return $found;
             }
         }
 
         return '';
+    }
+
+    /**
+     * Get the caller's namespace from debug_backtrace() info.
+     *
+     * This traverses the call stack until it finds the first function that is
+     * not a method of an ignored class/interface.
+     * You should pass in the output of
+     * `debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS)`.
+     *
+     * @since 0.1.0
+     *
+     * @param array|null $debugInfo Optional. Output of `debug_backtrace()` function.
+     *
+     * @return string Namespace of the calling object.
+     */
+    protected function getCallingNamespace($debugInfo = null)
+    {
+        // Fetch the debugInfo if none was passed in.
+        if ($debugInfo === null) {
+            $debugInfo = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+        }
+
+        $namespace = $this->extractNamespace($this->getCaller($debugInfo));
+
+        return '' !== $namespace
+            ? $namespace
+            : $this->getGlobalNamespace();
     }
 
     /**

@@ -1,0 +1,25 @@
+{
+  "name": "brightnucleus/namespace-backtracer",
+  "description": "Get the namespace of the calling object.",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Alain Schlesser",
+      "email": "alain.schlesser@gmail.com"
+    }
+  ],
+  "require": {
+    "brightnucleus/exceptions": ">=0.2",
+    "brightnucleus/config": ">=0.4.3"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4"
+  },
+  "autoload": {
+    "psr-4": {
+      "BrightNucleus\\NamespaceBacktracer\\": "src/"
+    }
+  }
+}

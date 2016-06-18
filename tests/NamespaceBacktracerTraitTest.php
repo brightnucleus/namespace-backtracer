@@ -50,6 +50,58 @@ class NamespaceBacktracerTraitTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('(GN)', $this->getGlobalNamespace());
     }
 
+    /** @dataProvider dataProviderTestGetCaller */
+    public function testGetCaller(
+        $debugInfo,
+        $ignoredInterfaces,
+        $ignoredFunctions,
+        $globalNamespace,
+        $result
+    ) {
+        $this->setupOverrides($ignoredInterfaces, $ignoredFunctions, $globalNamespace);
+        $this->assertEquals($result, $this->getCaller($debugInfo));
+    }
+
+    public function dataProviderTestGetCaller()
+    {
+        // $debugInfo, $ignoredInterfaces, $ignoredFunctions, $globalNamespace, $result
+        return [
+            [
+                null,
+                [],
+                [],
+                '(global)',
+                'BrightNucleus\NamespaceBacktracer\NamespaceBacktracerTraitTest',
+            ],
+            [
+                null,
+                [
+                    'BrightNucleus\NamespaceBacktracer\NamespaceBacktracerTraitTest',
+                ],
+                [],
+                '(global)',
+                'ReflectionMethod',
+            ],
+            [
+                null,
+                [
+                    'BrightNucleus\NamespaceBacktracer\NamespaceBacktracerTraitTest',
+                    'ReflectionMethod',
+                ],
+                [],
+                '(global)',
+                'PHPUnit_Framework_TestCase',
+            ],
+            [
+                debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS),
+                [],
+                [],
+                '(global)',
+                'BrightNucleus\NamespaceBacktracer\NamespaceBacktracerTraitTest',
+            ],
+        ];
+    }
+
     /** @dataProvider dataProviderTestGetCallingNamespace */
     public function testGetCallingNamespace(
         $debugInfo,
